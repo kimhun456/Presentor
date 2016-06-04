@@ -1,0 +1,15 @@
+# ninja log v5
+116	3250	0	res/edje/create_server.edj	66ebd872a67494a0
+85	3371	0	res/edje/bt_chat.edj	821a3f0739811b5c
+4	4874	0	src/Launcher.o	1fe89263199a0dde
+69	4882	0	src/Bluetooth_Manager.o	e8be59aa1ee71910
+74	4922	0	src/Menu_List.o	eccf959ba11c53d8
+3251	5402	0	src/Notice.o	778134e1dc63b588
+17	1726	0	src/Menu_List.o	eccf959ba11c53d8
+12	1769	0	src/Launcher.o	1fe89263199a0dde
+8	1055	0	src/Sender.o	62d09eb635a90cf6
+10	1522	0	src/Launcher.o	1fe89263199a0dde
+13	1542	0	src/Menu_List.o	eccf959ba11c53d8
+6	1552	0	src/Bluetooth_Manager.o	e8be59aa1ee71910
+16	1594	0	src/Sender.o	62d09eb635a90cf6
+1594	1833	0	presentor	e54ae25321b17fff
