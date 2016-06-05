@@ -20,7 +20,7 @@
 #include "BluetoothManager.h"
 #include "Notice.h"
 #include "MenuList.h"
-
+#include "StopWatch.h"
 
 #define BUBBLE_TEXT_WIDTH 200
 #define BUBBLE_MAIN_TEXT_STYLE "<font_size=30>%s</font_size>"
@@ -33,7 +33,7 @@ typedef enum _Message_Bubble_Style {
 	MESSAGE_BUBBLE_NONE = 0,
 	MESSAGE_BUBBLE_SENT,
 	MESSAGE_BUBBLE_RECEIVE,
-	MESSAGE_BUBBLE_LAST
+		MESSAGE_BUBBLE_LAST
 } Message_Bubble_Style;
 
 static struct _s_info {
@@ -283,7 +283,6 @@ static void _prev_message_send(appdata_s *ad)
 	}
 }
 
-
 Eina_Bool _rotary_handler_cb(void *data, Eext_Rotary_Event_Info *ev)
 {
 	appdata_s * ad = (appdata_s *) data;
@@ -298,8 +297,6 @@ Eina_Bool _rotary_handler_cb(void *data, Eext_Rotary_Event_Info *ev)
 
    return EINA_FALSE;
 }
-
-
 
 
 static void _send_button_clicked_cb(void *data, Evas_Object *obj, void *event_info)
@@ -461,7 +458,12 @@ ERROR:
 }
 
 
+
+// 아직 구현할꺼 ㄴㄴ
 static void _my_socket_data_received_cb(bt_socket_received_data_s *data, void *user_data){
+
+
+
 
 }
 
@@ -471,8 +473,6 @@ btn_clicked_cb(void *data, Evas_Object *obj, void *event_info)
 {
 
 	appdata_s * ad = (appdata_s *) data;
-
-
 	_next_message_send(ad);
 
 }
@@ -499,31 +499,6 @@ bt_chat_room_layout_create(appdata_s *ad)
 	evas_object_event_callback_add(main_scroller, EVAS_CALLBACK_DEL, _on_main_scroller_del_cb, NULL);
 	navi_it = elm_naviframe_item_push(ad->navi, "Chatting", NULL, NULL, main_scroller, NULL);
 	elm_naviframe_item_title_enabled_set(navi_it, EINA_FALSE, EINA_FALSE);
-}
-
-Eina_Bool
-time_tic_toc(void *data){
-
-	appdata_s *ad = (appdata_s *) data;
-
-
-	elm_object_text_set(ad->time, "<align=center><font_size=80>00:10</font_size></align>");
-	ad->milliseconds +=50;
-
-
-	return EINA_TRUE;
-
-}
-
-
-void
-add_timer(appdata_s *ad){
-
-	ad->milliseconds = 0;
-	ad->timer =  ecore_timer_add(0.1, time_tic_toc, ad);
-	elm_object_text_set(ad->time, "<align=center><font_size=80>00:00</font_size></align>");
-	evas_object_show(ad->time);
-
 }
 
 
@@ -556,7 +531,6 @@ bt_button_layout_create(appdata_s *ad)
 	evas_object_show(ad->time);
 	elm_object_part_content_set(layout, "elm.swallow.content",ad->time);
 
-
 	// 여기 수정 nv -> layout
 	button = elm_button_add(layout);
 	elm_object_style_set(button, "bottom");
@@ -567,6 +541,6 @@ bt_button_layout_create(appdata_s *ad)
 
 	elm_naviframe_item_push(nv, "Presentor", NULL, NULL, layout, NULL);
 
-	add_timer(ad);
+	init_timer(ad);
 
 }

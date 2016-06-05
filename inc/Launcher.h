@@ -47,10 +47,11 @@ typedef struct appdata{
 	Evas_Object *layout;
 	Eext_Circle_Surface *circle_surface;
 
+	//timer
 	Evas_Object *time;
 	Ecore_Timer* timer;
 	int milliseconds;
-
+	bool start;
 
 	bool bt;
 	int socket_fd;

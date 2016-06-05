@@ -25,6 +25,8 @@
 #include "Sender.h"
 #include "log.h"
 
+
+
 static void _win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	ui_app_exit();
