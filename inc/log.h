@@ -22,7 +22,7 @@
 #include <dlog.h>
 
 #undef LOG_TAG
-#define LOG_TAG "BLUETOOTHCHAT"
+#define LOG_TAG "PRESENTOR"
 
 #if !defined(_D)
 #define _D(fmt, arg...) dlog_print(DLOG_DEBUG, LOG_TAG, fmt"\n", ##arg)

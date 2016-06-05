@@ -47,7 +47,7 @@ time_tic_toc(void *data){
 
 	minute_seconds = header + min + ":" + sec + footer;
 
-	elm_object_text_set(ad->time,minute_seconds.c_str());
+	elm_object_text_set(ad->time, minute_seconds.c_str());
 
 	return EINA_TRUE;
 }

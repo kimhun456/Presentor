@@ -21,6 +21,7 @@
 #include "Notice.h"
 #include "Sender.h"
 #include "MenuList.h"
+#include "SensorManager.h"
 
 
 static void _gestrue_cb(void *data, Evas_Object *obj, void *event_info)
@@ -30,21 +31,9 @@ static void _gestrue_cb(void *data, Evas_Object *obj, void *event_info)
 	appdata_s *ad = (appdata_s *) data;
 	ret_if(!ad);
 
-	bt_mgr_initialize(ad, BT_MGR_SEARCH);
+	create_sensor_info_layout(ad);
+
 }
-
-//
-//// 서버 찾는
-//static void _search_cb(void *data, Evas_Object *obj, void *event_info)
-//{
-//	_D("%s", __func__);
-//
-//	appdata_s *ad = (appdata_s *) data;
-//	ret_if(!ad);
-//
-//	bt_mgr_initialize(ad, BT_MGR_SEARCH);
-//}
-
 
 
 /* 서버 기다리는 거 */
@@ -91,6 +80,6 @@ void create_list_view(appdata_s *ad)
 	/* This button is set for devices which doesn't have H/W back key. */
 	btn = elm_button_add(nf);
 	elm_object_style_set(btn, "naviframe/end_btn/default");
-	nf_it = elm_naviframe_item_push(nf, "Bluetooth Chat", btn, NULL, list, NULL);
+	nf_it = elm_naviframe_item_push(nf, "Menu", btn, NULL, list, NULL);
 	elm_naviframe_item_pop_cb_set(nf_it, _naviframe_pop_cb, ad);
 }

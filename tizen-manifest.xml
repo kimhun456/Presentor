@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <manifest xmlns="http://tizen.org/ns/packages" api-version="2.3.1" package="kr.ac.ajou.capstone.presentor" version="1.0.0">
-    <profile name="mobile"/>
+    <profile name="wearable"/>
     <ui-application appid="kr.ac.ajou.capstone.presentor" exec="presentor" multiple="false" nodisplay="false" taskmanage="true" type="capp">
         <label>Presentor</label>
         <icon>presentor.png</icon>
@@ -8,6 +8,5 @@
     <privileges>
         <privilege>http://tizen.org/privilege/appmanager.launch</privilege>
         <privilege>http://tizen.org/privilege/bluetooth</privilege>
-        
     </privileges>
 </manifest>
