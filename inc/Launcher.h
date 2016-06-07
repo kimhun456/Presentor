@@ -46,6 +46,7 @@ typedef struct appdata{
 	Evas_Object* conform;
 	Evas_Object *layout;
 	Evas_Object *accuracy;
+	Evas_Object *state;
 	Eext_Circle_Surface *circle_surface;
 
 	//timer

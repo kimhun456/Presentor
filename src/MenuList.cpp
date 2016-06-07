@@ -22,7 +22,7 @@
 #include "Sender.h"
 #include "MenuList.h"
 #include "SensorManager.h"
-
+#include "Gesture.h"
 
 static void _gestrue_cb(void *data, Evas_Object *obj, void *event_info)
 {
@@ -32,6 +32,18 @@ static void _gestrue_cb(void *data, Evas_Object *obj, void *event_info)
 	ret_if(!ad);
 
 	create_sensor_info_layout(ad);
+
+}
+
+
+static void _example(void *data, Evas_Object *obj, void *event_info)
+{
+	_D("%s", __func__);
+
+	appdata_s *ad = (appdata_s *) data;
+	ret_if(!ad);
+
+	create_exam_layout(ad);
 
 }
 
@@ -73,6 +85,7 @@ void create_list_view(appdata_s *ad)
 
 	/* Main Menu Items Here */
 	elm_list_item_append(list, "Wait Client", NULL, NULL, _wait_cb, ad);
+	elm_list_item_append(list, "Example", NULL, NULL, _example, ad);
 	elm_list_item_append(list, "Gesture Setting", NULL, NULL, _gestrue_cb, ad);
 
 	elm_list_go(list);

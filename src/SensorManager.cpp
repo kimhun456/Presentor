@@ -92,7 +92,6 @@ void Gyroscope_use (appdata_s *ad)
         if ( ison == SENSOR_ERROR_NONE )
         {//장비 켜기
             sensor_error_e errorcode;
-            sensor_event_s data;
             errorcode = (sensor_error_e) sensor_listener_set_event_cb(listener, 200, gyro_events_handler, ad);
         }
     }
@@ -124,14 +123,10 @@ create_sensor_info_layout(void * data ){
 	elm_object_style_set(button, "bottom");
 	elm_object_text_set(button, "Setting");
 	elm_object_part_content_set(layout, "elm.swallow.button", button);
-//	evas_object_smart_callback_add(button, "clicked", btn_clicked_cb, ad);
 	evas_object_show(button);
 
 	elm_naviframe_item_push(nv, "Gesture Setting", NULL, NULL, layout, NULL);
-
-//	get_sensor_data(ad);
-
-
 	Gyroscope_use(ad);
-	Accelerometer_use ();
+	Accelerometer_use();
+
 }
