@@ -18,6 +18,8 @@
 #ifndef __BLUETOOTH_CHAT_H__
 #define __BLUETOOTH_CHAT_H__
 
+#include <tuple>
+#include <queue>
 #include <app.h>
 #include <tizen.h>
 #include <Elementary.h>
@@ -41,6 +43,9 @@
 
 #define HAPI __attribute__((visibility("hidden")))
 
+
+typedef std::tuple<float, float, float> xyz;
+
 typedef struct appdata{
 	Evas_Object* win;
 	Evas_Object* navi;
@@ -48,6 +53,7 @@ typedef struct appdata{
 	Evas_Object *layout;
 	Evas_Object *accuracy;
 	Evas_Object *state;
+	Evas_Object *gestrue;
 	Eext_Circle_Surface *circle_surface;
 
 	//timer
@@ -55,7 +61,6 @@ typedef struct appdata{
 	Ecore_Timer* timer;
 	int minutes;
 	int seconds;
-	int milliseconds;
 	bool start;
 	Evas_Object *label;
 	Evas_Object *datetime;
@@ -68,6 +73,11 @@ typedef struct appdata{
 
 	int win_w;
 	int win_h;
+
+	//Gesture data queue
+	std::queue<xyz> gyroQueue;
+	std::queue<xyz> accelQueue;
+
 } appdata_s;
 
 typedef enum {
@@ -75,6 +85,11 @@ typedef enum {
 	CS_PREPARE,
 	CS_CHAT,
 } current_state_e;
+
+typedef enum {
+	MOVE,
+	STOP
+}gesture_state;
 
 void app_resource_get(const char *edj_file_in, char *edj_path_out, int edj_path_max);
 void cr_layout(appdata_s *ad);

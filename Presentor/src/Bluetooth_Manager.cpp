@@ -1,27 +1,16 @@
-/*
- * Samsung API
- * Copyright (c) 2009-2015 Samsung Electronics Co., Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the License);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/license/
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
+
+/*
+	  Bluetooth 매니저
+
+
+*/
 #include "Launcher.h"
 #include "BluetoothManager.h"
 #include "Notice.h"
 #include "Sender.h"
 
 #define MAX_NUM_PENDING 1
-
 
 
 static struct _s_info {
@@ -48,9 +37,7 @@ static void _socket_conn_state_changed_cb(int result, bt_socket_connection_state
 			ad->role = connection->local_role;
 			ad->socket_fd = connection->socket_fd;
 
-			// 블루투스 채팅 레이아웃 만들기
-//			bt_chat_room_layout_create(ad);
-			// 여기다가 채팅 레이아웃 만들기
+			// 연결완료시 레이아웃 생성.
 			bt_button_layout_create(ad);
 			if (s_info.noti) {
 				evas_object_del(s_info.noti);

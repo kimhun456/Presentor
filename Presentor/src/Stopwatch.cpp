@@ -9,6 +9,13 @@
 
 using namespace std;
 
+
+
+haptic_device_h handle;
+haptic_effect_h effect_handle;
+
+
+
 Eina_Bool
 time_tic_toc(void *data){
 
@@ -57,6 +64,25 @@ time_tic_toc(void *data){
 	string result = header + m + ":" + s + footer;
 
 	elm_object_text_set(ad->time, result.c_str());
+	int error;
+
+
+	//5분
+	if(min == 5 && sec == 0){
+
+		error = device_haptic_vibrate(handle, 1000, 55, &effect_handle);
+	}
+	// 1분
+	else if(min == 1 && sec ==0){
+
+		error = device_haptic_vibrate(handle, 2000, 77, &effect_handle);
+	}
+	// 끝났을 경우
+	else if(min ==0 && sec == 0){
+
+		error = device_haptic_vibrate(handle, 3000, 99, &effect_handle);
+	}
+
 
 	return EINA_TRUE;
 }
@@ -64,6 +90,8 @@ time_tic_toc(void *data){
 static Evas_Event_Flags
 doubleClick(void *data, void *event_info)
 {
+	_D("DOUBLE TAP");
+
 	appdata_s *ad = (appdata_s *) data;
 
 	ad->minutes = 0;
@@ -80,6 +108,8 @@ doubleClick(void *data, void *event_info)
 static Evas_Event_Flags
 tap(void *data, void *event_info)
 {
+
+	_D("TAP");
 	appdata_s *ad = (appdata_s *) data;
 
 	if(ad->start){
@@ -96,7 +126,8 @@ tap(void *data, void *event_info)
 void
 set_clock_layout(appdata_s *ad){
 
-	Evas_Object *gesture;
+	Evas_Object *gesture = ad->gestrue;
+
 	gesture = elm_gesture_layer_add(ad->time);
 	elm_gesture_layer_attach(gesture,ad->time );
 
@@ -118,6 +149,11 @@ init_timer(appdata_s *ad){
 	ecore_timer_freeze(ad->timer);
 	ad->start = false;
 
-	set_clock_layout(ad);
+
+	int error;
+	error = device_haptic_open(0, &handle);
+	dlog_print(DLOG_INFO, LOG_TAG, "[device_haptic_open] error:%d",error);
+
+
 }
 

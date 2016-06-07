@@ -220,10 +220,13 @@ bt_button_layout_create(appdata_s *ad)
 
 	button = elm_button_add(layout);
 	elm_object_style_set(button, "bottom");
-	elm_object_text_set(button, "Setting");
+	elm_object_text_set(button, "Set Timer");
 	elm_object_part_content_set(layout, "elm.swallow.button", button);
 	evas_object_smart_callback_add(button, "clicked", time_setting_btn_clicked_cb, ad);
 	evas_object_show(button);
 	elm_naviframe_item_push(nv, "Presentor", NULL, NULL, layout, NULL);
+
+
+	set_clock_layout(ad);
 
 }

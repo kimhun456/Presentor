@@ -8,7 +8,11 @@
 #include "SensorManager.h"
 #include "log.h"
 #include "Launcher.h"
+#include "StopWatch.h"
 #include <string>
+#include <queue>
+
+#include <device/haptic.h>
 
 using namespace std;
 
@@ -25,49 +29,64 @@ gyro_events_handler(sensor_h sensor, sensor_event_s *event, void *user_data)
 
 	result = to_string(event->values[0]) + " , " +to_string(event->values[1]) + " , " +to_string(event->values[2]);
 
-	_D(" %d %d %d", event->values[0], event->values[1], event->values[2]);
+//	_D(" GYRO : %.4f %.4f %.4f", event->values[0], event->values[1], event->values[2]);
 
 	elm_object_text_set(ad->accuracy, result.c_str());
 	evas_object_show(ad->accuracy);
 
 }
-void Accelerometer_use ()
+
+
+void
+accel_events_handler(sensor_h sensor, sensor_event_s *event, void *user_data)
 {
+   // Select a specific sensor with a sensor handle
+   // This example uses the sensor type, assuming there is only 1 sensor for each type
+
+	appdata_s *ad = (appdata_s *) user_data;
+
+
+	string result;
+
+	result = to_string(event->values[0]) + " , " +to_string(event->values[1]) + " , " +to_string(event->values[2]);
+
+//	_D(" ACC :  %.4f %.4f %.4f", event->values[0], event->values[1], event->values[2]);
+
+//	elm_object_text_set(ad->accuracy, result.c_str());
+//	evas_object_show(ad->accuracy);
+
+}
+
+void Accelerometer_use (appdata_s *ad)
+{
+
     sensor_type_e     type;
-    sensor_h          sensor;
-    sensor_listener_h listener;
+	sensor_h          sensor;
+	sensor_listener_h listener;
 
-    type = SENSOR_ACCELEROMETER;
+	type = SENSOR_ACCELEROMETER;
 
-    sensor_get_default_sensor (type, &sensor);
-    sensor_create_listener (sensor, &listener);
-    // 모듈 생성
+	sensor_get_default_sensor (type, &sensor);
+	sensor_create_listener (sensor, &listener);
+	// 모듈 생성
 
-    bool supported = false;
-    sensor_is_supported (type, &supported);
-    if ( supported )
-    {// 장비 지원 여부 확인
-        sensor_error_e ison = SENSOR_ERROR_NONE;
-        ison = (sensor_error_e)sensor_listener_start (listener);
-        if ( ison == SENSOR_ERROR_NONE )
-        {//장비 켜기
-            sensor_error_e errorcode;
-            sensor_event_s data;
-            errorcode = (sensor_error_e)sensor_listener_read_data (listener, &data);
-            //데이터 수신
-            if ( errorcode == SENSOR_ERROR_NONE )
-            {
-                dlog_print (DLOG_INFO, "DIT", "x : %f, y : %f, z : %f", data.values[0], data.values[1], data.values[2]);
-                //데이터 출력
-                sensor_listener_stop (listener);
-                //장비 끄기
-            }
-        }
-    }
+	bool supported = false;
+	sensor_is_supported (type, &supported);
+	if ( supported )
+	{// 장비 지원 여부 확인
+		sensor_error_e ison = SENSOR_ERROR_NONE;
+		ison =(sensor_error_e) sensor_listener_start (listener);
+		if ( ison == SENSOR_ERROR_NONE )
+		{//장비 켜기
+			sensor_error_e errorcode;
+			errorcode = (sensor_error_e) sensor_listener_set_event_cb(listener, 100, gyro_events_handler, ad);
+		}
+	}
 
-    sensor_listener_unset_event_cb (listener);
-    sensor_listener_stop (listener);
-    sensor_destroy_listener (listener);
+//
+//    sensor_listener_unset_event_cb (listener);
+//    sensor_listener_stop (listener);
+//    sensor_destroy_listener (listener);
     // 모듈 삭제
 }
 
@@ -92,15 +111,19 @@ void Gyroscope_use (appdata_s *ad)
         if ( ison == SENSOR_ERROR_NONE )
         {//장비 켜기
             sensor_error_e errorcode;
-            errorcode = (sensor_error_e) sensor_listener_set_event_cb(listener, 200, gyro_events_handler, ad);
+            errorcode = (sensor_error_e) sensor_listener_set_event_cb(listener, 100, accel_events_handler, ad);
         }
     }
+
+
 //
 //    sensor_listener_unset_event_cb (listener);
 //    sensor_listener_stop (listener);
 //    sensor_destroy_listener (listener);
     // 모듈 삭제
 }
+
+
 
 void
 create_sensor_info_layout(void * data ){
@@ -127,6 +150,5 @@ create_sensor_info_layout(void * data ){
 
 	elm_naviframe_item_push(nv, "Gesture Setting", NULL, NULL, layout, NULL);
 	Gyroscope_use(ad);
-	Accelerometer_use();
-
+	Accelerometer_use(ad);
 }

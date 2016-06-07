@@ -24,7 +24,7 @@
 #include "SensorManager.h"
 #include "Gesture.h"
 
-static void _gestrue_cb(void *data, Evas_Object *obj, void *event_info)
+static void _sensor_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	_D("%s", __func__);
 
@@ -35,17 +35,17 @@ static void _gestrue_cb(void *data, Evas_Object *obj, void *event_info)
 
 }
 
-
-static void _example(void *data, Evas_Object *obj, void *event_info)
-{
-	_D("%s", __func__);
-
-	appdata_s *ad = (appdata_s *) data;
-	ret_if(!ad);
-
-	create_exam_layout(ad);
-
-}
+//
+//static void _example(void *data, Evas_Object *obj, void *event_info)
+//{
+//	_D("%s", __func__);
+//
+//	appdata_s *ad = (appdata_s *) data;
+//	ret_if(!ad);
+//
+//	create_exam_layout(ad);
+//
+//}
 
 
 /* 서버 기다리는 거 */
@@ -85,8 +85,8 @@ void create_list_view(appdata_s *ad)
 
 	/* Main Menu Items Here */
 	elm_list_item_append(list, "Wait Client", NULL, NULL, _wait_cb, ad);
-	elm_list_item_append(list, "Example", NULL, NULL, _example, ad);
-	elm_list_item_append(list, "Gesture Setting", NULL, NULL, _gestrue_cb, ad);
+//	elm_list_item_append(list, "Example", NULL, NULL, _example, ad);
+	elm_list_item_append(list, "Sensor", NULL, NULL, _sensor_cb, ad);
 
 	elm_list_go(list);
 
