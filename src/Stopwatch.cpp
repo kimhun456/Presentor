@@ -6,10 +6,8 @@
  */
 
 #include "StopWatch.h"
-#include <string>
 
 using namespace std;
-
 
 Eina_Bool
 time_tic_toc(void *data){
@@ -19,45 +17,57 @@ time_tic_toc(void *data){
 	string header = "<align=center><font_size=80>";
 	string footer = "</font_size></align>";
 
-	string minute_seconds ;
+	int min = ad->minutes;
+	int sec = ad->seconds;
 
-	ad->milliseconds +=100;
+	if(sec == 0){
+		if(min >0){
+			min--;
+			sec = 59;
+		}
 
-	int miillisec = ad->milliseconds;
-
-	string min,sec;
-	int seconds = miillisec / 1000;
-	int minute = seconds / 60;
-
-	seconds %=60;
-	minute %=60;
-	miillisec %=1000;
-
-	if(minute < 10){
-		min = "0"+to_string(minute);
-	}else{
-		min = to_string(minute);
+		else{
+			ecore_timer_freeze(ad->timer);
+			ad->start = false;
+		}
+	}
+	else{
+		sec--;
 	}
 
-	if(seconds < 10){
-		sec = "0"+to_string(seconds);
+	ad->minutes = min;
+	ad->seconds = sec;
+	_D(" min : %d", min);
+	_D(" sec : %d", sec);
+
+	string m;
+	string s;
+	if(min < 10){
+		m = "0" + to_string(min);
 	}else{
-		sec = to_string(seconds);
+		m = to_string(min);
 	}
 
-	minute_seconds = header + min + ":" + sec + footer;
+	if(sec<10){
+		s = "0"+ to_string(sec);
+	}else{
+		s = to_string(sec);
+	}
 
-	elm_object_text_set(ad->time, minute_seconds.c_str());
+	string result = header + m + ":" + s + footer;
+
+	elm_object_text_set(ad->time, result.c_str());
 
 	return EINA_TRUE;
 }
 
 static Evas_Event_Flags
-longClick(void *data, void *event_info)
+doubleClick(void *data, void *event_info)
 {
 	appdata_s *ad = (appdata_s *) data;
 
-	ad->milliseconds = 0;
+	ad->minutes = 0;
+	ad->seconds = 0;
 	ecore_timer_freeze(ad->timer);
 	ad->start = false;
 
@@ -66,8 +76,6 @@ longClick(void *data, void *event_info)
 
    return EVAS_EVENT_FLAG_ON_HOLD;
 }
-
-
 
 static Evas_Event_Flags
 tap(void *data, void *event_info)
@@ -90,30 +98,26 @@ set_clock_layout(appdata_s *ad){
 
 	Evas_Object *gesture;
 	gesture = elm_gesture_layer_add(ad->time);
-
 	elm_gesture_layer_attach(gesture,ad->time );
 
 	elm_gesture_layer_cb_set(gesture, ELM_GESTURE_N_TAPS, ELM_GESTURE_STATE_START,
 	                         tap,  ad);
 
 	elm_gesture_layer_cb_set(gesture, ELM_GESTURE_N_DOUBLE_TAPS, ELM_GESTURE_STATE_END,
-	                         longClick, ad);
+							doubleClick, ad);
 
-	elm_object_text_set(ad->time, "<align=center><font_size=80>00:00</font_size></align>");
-
-	evas_object_show(ad->time);
 }
 
 void
 init_timer(appdata_s *ad){
 
-	ad->milliseconds = 0;
+	ecore_timer_del(ad->timer);
 
-	// timer add 100 millisecond
-	ad->timer =  ecore_timer_add(0.1, time_tic_toc, ad);
+	// timer add 1 second
+	ad->timer =  ecore_timer_add(1, time_tic_toc, ad);
 	ecore_timer_freeze(ad->timer);
 	ad->start = false;
 
-
 	set_clock_layout(ad);
 }
+

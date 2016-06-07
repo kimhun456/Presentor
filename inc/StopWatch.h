@@ -11,6 +11,7 @@
 
 
 #include "Launcher.h"
+#include <string>
 
 // init_timer
 void

@@ -34,6 +34,7 @@
 #define PACKAGE "BLUETOOTHCHAT"
 #endif
 
+#define FORMAT "%d/%b/%Y%H:%M"
 #define EDJ_FILE "edje/bt_chat.edj"
 #define CREATE_SERVER "edje/create_server.edj"
 #define GRP_MAIN "main"
@@ -52,8 +53,13 @@ typedef struct appdata{
 	//timer
 	Evas_Object *time;
 	Ecore_Timer* timer;
+	int minutes;
+	int seconds;
 	int milliseconds;
 	bool start;
+	Evas_Object *label;
+	Evas_Object *datetime;
+	struct tm saved_time;
 
 	bool bt;
 	int socket_fd;
@@ -72,5 +78,6 @@ typedef enum {
 
 void app_resource_get(const char *edj_file_in, char *edj_path_out, int edj_path_max);
 void cr_layout(appdata_s *ad);
+
 
 #endif /* __BLUETOOTH_CHAT_H__ */
