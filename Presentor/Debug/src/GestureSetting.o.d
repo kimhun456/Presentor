@@ -1,5 +1,5 @@
-src/Notice.o: ../src/Notice.cpp \
-  /Users/HyunJae/workSpace/Presentor/Presentor/inc/Notice.h \
+src/GestureSetting.o: ../src/GestureSetting.cpp \
+  /Users/HyunJae/workSpace/Presentor/Presentor/inc/GestureSetting.h \
   /Users/HyunJae/workSpace/Presentor/Presentor/inc/Launcher.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/appfw/app.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/appfw/app_control.h \

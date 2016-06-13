@@ -22,15 +22,17 @@
 #include "Sender.h"
 #include "MenuList.h"
 #include "SensorManager.h"
+#include "GestureSetting.h"
 
-static void _sensor_cb(void *data, Evas_Object *obj, void *event_info)
+
+static void _gesture_setting_cb(void *data, Evas_Object *obj, void *event_info)
 {
 	_D("%s", __func__);
 
 	appdata_s *ad = (appdata_s *) data;
 	ret_if(!ad);
 
-	create_sensor_info_layout(ad);
+	create_gesture_setting_ui(ad);
 
 }
 
@@ -72,6 +74,9 @@ static Eina_Bool _naviframe_pop_cb(void *data, Elm_Object_Item *it)
 
 void create_list_view(appdata_s *ad)
 {
+	ad->use_gesture = true;
+	destroy_sensor(ad);
+
 	Evas_Object *list;
 	Evas_Object *btn;
 	Evas_Object *nf = ad->navi;
@@ -84,8 +89,7 @@ void create_list_view(appdata_s *ad)
 
 	/* Main Menu Items Here */
 	elm_list_item_append(list, "Wait Client", NULL, NULL, _wait_cb, ad);
-//	elm_list_item_append(list, "Example", NULL, NULL, _example, ad);
-	elm_list_item_append(list, "Sensor", NULL, NULL, _sensor_cb, ad);
+	elm_list_item_append(list, "Settings", NULL, NULL, _gesture_setting_cb, ad);
 
 	elm_list_go(list);
 

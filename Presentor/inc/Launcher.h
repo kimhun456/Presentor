@@ -61,6 +61,7 @@ typedef struct appdata{
 	Evas_Object* navi;
 	Evas_Object* conform;
 	Evas_Object *layout;
+	Evas_Object *gesture_button;
 	Evas_Object *accuracy;
 	Evas_Object *state;
 	Evas_Object *gestrue;
@@ -85,8 +86,10 @@ typedef struct appdata{
 	int win_h;
 
 	//Gesture data queue
-	int frequency;
 
+	bool use_gesture;
+
+	int frequency;
 	sensor_values gyroValue[10];
 	sensor_values accValue[10];
 	int gyroCount;
@@ -103,13 +106,11 @@ typedef struct appdata{
 	// 남아있는 시간동안 처리 가능한지
 	int restTime;
 
-
 	// 리스너들
     sensor_listener_h gyro_listener;
     sensor_listener_h accel_listener;
 
     //Haptic
-
     haptic_device_h handle;
     haptic_effect_h effect_handle;
 

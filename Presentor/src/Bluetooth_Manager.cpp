@@ -11,18 +11,11 @@
 #include "Sender.h"
 
 #define MAX_NUM_PENDING 1
-
-
 static struct _s_info {
-	bt_adapter_device_discovery_info_s *info;
-	Evas_Object *list;
 	Evas_Object *noti;
 } s_info = {
-	.info = NULL,
 	.noti = NULL,
-	.list = NULL,
 };
-
 
 static void _socket_conn_state_changed_cb(int result, bt_socket_connection_state_e connection_state, bt_socket_connection_s *connection, void *user_data)
 {
@@ -52,203 +45,8 @@ static void _socket_conn_state_changed_cb(int result, bt_socket_connection_state
 	}
 }
 
-static void _device_bond_created_cb(int result, bt_device_info_s *device_info, void *user_data)
-{
-	int ret = 0;
-
-	if (result != BT_ERROR_NONE) {
-		_E("Failed result: %d", result);
-		goto DEL_NOTI;
-	}
-
-	if (device_info != NULL && !strncmp(device_info->remote_address, s_info.info->remote_address, strlen(device_info->remote_address))) {
-		ret = bt_socket_connect_rfcomm(s_info.info->remote_address, BT_MGR_UUID);
-		if (ret != BT_ERROR_NONE) {
-			_E("[bt_socket_listen_and_accept_rfcomm] Failed");
-			goto DEL_NOTI;
-		}
-	} else {
-		_D("[bond create cb] Bonded with another device");
-		goto DEL_NOTI;
-	}
-
-	return;
-
-DEL_NOTI:
-
-	if (s_info.noti) {
-		evas_object_del(s_info.noti);
-		s_info.noti = NULL;
-	}
-
-	return;
-}
 
 
-// 리스트에 있는 항목을 눌러서 처리했을 경우
-static void _click_friend_item_cb(void *data, Evas_Object *obj, void *event_info)
-{
-	Evas_Object *noti = NULL;
-	Elm_Object_Item *item = NULL;
-	bt_adapter_device_discovery_info_s *info = NULL;
-	bt_error_e ret = BT_ERROR_NONE;
-
-	ret_if(!obj);
-
-	info = (bt_adapter_device_discovery_info_s *) data;
-	ret_if(!info);
-	s_info.info = info;
-
-	item = elm_list_selected_item_get(obj);
-	ret_if(!item);
-
-	noti = bt_noti_popup_create(obj, "Waiting for connecting with the friend");
-	if (!noti) {
-		_E("Failed to create popup noti");
-	} else {
-		s_info.noti = noti;
-	}
-
-	elm_list_item_selected_set(item, EINA_FALSE);
-
-	// 디바이스가 연결이 될 경우!! 바로 이 때
-
-
-	if (info != NULL && !strncmp(info->remote_address, info->remote_address, strlen(info->remote_address))) {
-			ret = (bt_error_e)bt_socket_connect_rfcomm(info->remote_address, BT_MGR_UUID);
-			if (ret != BT_ERROR_NONE) {
-				_E("[bt_socket_listen_and_accept_rfcomm] Failed");
-			}
-		} else {
-			_D("[bond create cb] Bonded with another device");
-	}
-
-
-//
-//	ret = bt_device_set_bond_created_cb(_device_bond_created_cb, NULL);
-//	ret_if(ret != BT_ERROR_NONE);
-//
-//	ret = bt_device_create_bond(info->remote_address);
-//	ret_if(ret != BT_ERROR_NONE);
-}
-
-// 어댑터상태가바뀌는 콜백
-static void _adapter_discovery_state_changed_cb(int result, bt_adapter_device_discovery_state_e discovery_state, bt_adapter_device_discovery_info_s *discovery_info, void *user_data)
-{
-	appdata_s *ad = NULL;
-	bt_adapter_device_discovery_info_s *new_device_info = NULL;
-	int ret = 0;
-
-	ad = (appdata_s *) user_data;
-	ret_if(!ad);
-	ret_if(!s_info.list);
-	ret_if(result != BT_ERROR_NONE);
-
-
-
-	switch (discovery_state) {
-	case BT_ADAPTER_DEVICE_DISCOVERY_STARTED:
-		_D("BT_ADAPTER_DEVICE_DISCOVERY_STARTED");
-		break;
-	case BT_ADAPTER_DEVICE_DISCOVERY_FINISHED:
-		_D("BT_ADAPTER_DEVICE_DISCOVERY_FINISHED");
-		ret = bt_adapter_unset_device_discovery_state_changed_cb();
-		if (ret != BT_ERROR_NONE) {
-			_E("[BT_ADAPTER_DEVICE_DISCOVERY_FINISHED] Failed to unset the state discovery cb");
-			return;
-		}
-		ad->bt = FALSE;
-		break;
-	case BT_ADAPTER_DEVICE_DISCOVERY_FOUND:
-		_D("BT_ADAPTER_DEVICE_DISCOVERY_FOUND");
-		if (discovery_info != NULL && s_info.list != NULL) {
-			new_device_info = static_cast<bt_adapter_device_discovery_info_s*>(malloc(sizeof(bt_adapter_device_discovery_info_s)));
-			if (new_device_info != NULL) {
-				_D("Device Name is: %s", discovery_info->remote_name);
-
-				memcpy(new_device_info, discovery_info, sizeof(bt_adapter_device_discovery_info_s));
-				new_device_info->remote_address = strdup(discovery_info->remote_address);
-				new_device_info->remote_name = strdup(discovery_info->remote_name);
-				elm_list_item_append(s_info.list, new_device_info->remote_name, NULL, NULL, _click_friend_item_cb, new_device_info);
-				elm_list_go(s_info.list);
-			}
-		}
-		break;
-	}
-}
-
-//찾기 시작한다아아아.
-static void _discovery_start(appdata_s *ad)
-{
-	bt_error_e ret = BT_ERROR_NONE;
-
-	ret_if(!ad);
-	ret_if(ad->bt);
-
-	ad->bt = TRUE;
-
-	ret =(bt_error_e) bt_adapter_set_device_discovery_state_changed_cb(_adapter_discovery_state_changed_cb, ad);
-	ret_if(ret != BT_ERROR_NONE);
-
-	ret =(bt_error_e) bt_adapter_start_device_discovery();
-	ret_if(ret != BT_ERROR_NONE);
-}
-
-static void _discovery_stop(appdata_s *ad)
-{
-	bt_error_e ret = BT_ERROR_NONE;
-
-	ret_if(!ad);
-
-	if (ad->bt) {
-		ret =(bt_error_e) bt_adapter_stop_device_discovery();
-		ret_if(ret != BT_ERROR_NONE);
-	}
-
-	ad->bt = FALSE;
-
-	ret =(bt_error_e) bt_adapter_unset_device_discovery_state_changed_cb();
-	ret_if(ret != BT_ERROR_NONE);
-}
-
-static void _on_search_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-	appdata_s *ad = (appdata_s *) data;
-	ret_if(!ad);
-
-	if (s_info.list != NULL) {
-		_discovery_stop(ad);
-		elm_list_clear(s_info.list);
-		s_info.list = NULL;
-	}
-}
-
-static void _search_layout_create(appdata_s *ad)
-{
-	int ret = 0;
-
-	ret_if(!ad);
-	ret_if(!ad->navi);
-
-	ad->role = BT_SOCKET_CLIENT;
-
-	s_info.list = elm_list_add(ad->navi);
-	ret_if(!s_info.list);
-
-
-	// 뒤로가기가 눌리면 전부 없애주는 함수 호출
-	evas_object_event_callback_add(s_info.list, EVAS_CALLBACK_DEL, _on_search_del_cb, ad);
-	evas_object_size_hint_weight_set(s_info.list, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(s_info.list, EVAS_HINT_FILL, EVAS_HINT_FILL);
-	elm_list_go(s_info.list);
-	elm_naviframe_item_push(ad->navi, "Search Computers", NULL, NULL, s_info.list, NULL);
-
-	// 블루투스 소켓 연결이 바뀌면
-	ret = bt_socket_set_connection_state_changed_cb(_socket_conn_state_changed_cb, ad);
-	ret_if(ret != BT_ERROR_NONE);
-
-	_discovery_start(ad);
-}
 
 static void _server_create(appdata_s *ad)
 {
@@ -295,7 +93,7 @@ static void _server_layout_create(appdata_s *ad)
 
 	elm_object_part_content_set(layout, "progress", progress);
 
-	navi_it = elm_naviframe_item_push(ad->navi, "Wait a Friend", NULL, NULL, layout, NULL);
+	navi_it = elm_naviframe_item_push(ad->navi, "Wait a Computer..", NULL, NULL, layout, NULL);
 	elm_naviframe_item_title_enabled_set(navi_it, EINA_FALSE, EINA_FALSE);
 
 	_server_create(ad);
@@ -344,10 +142,7 @@ HAPI void bt_mgr_initialize(void *data, bt_mgr_type type)
 		}
 	} else {
 		switch (type) {
-		case BT_MGR_SEARCH:
 
-			// 서치 레이아웃 만드는
-			_search_layout_create(ad);
 			break;
 		case BT_MGR_WAIT:
 			_server_layout_create(ad);

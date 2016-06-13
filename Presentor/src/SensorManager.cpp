@@ -293,32 +293,11 @@ destroy_sensor(void *data){
     sensor_destroy_listener (ad->gyro_listener);
 
 }
-
 void
-create_sensor_info_layout(void * data ){
-	appdata_s *ad = (appdata_s *) data;
-	Evas_Object *nv = ad->navi;
-	Evas_Object *button, *layout;
-
-	layout = elm_layout_add(nv);
-	elm_layout_theme_set(layout, "layout", "bottom_button", "default");
-	evas_object_show(layout);
-
-	ad->accuracy = elm_label_add(layout);
-	evas_object_size_hint_weight_set(ad->accuracy, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	elm_object_text_set(ad->accuracy, "Set Time");
-	evas_object_show(ad->accuracy);
-	elm_object_part_content_set(layout, "elm.swallow.content",ad->accuracy);
-
-	// 여기 수정 nv -> layout
-	button = elm_button_add(layout);
-	elm_object_style_set(button, "bottom");
-	elm_object_text_set(button, "Setting");
-	elm_object_part_content_set(layout, "elm.swallow.button", button);
-	evas_object_show(button);
-
-	elm_naviframe_item_push(nv, "Gesture Setting", NULL, NULL, layout, NULL);
-
-	init_sensor(ad);
+_opened_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   dlog_print(DLOG_INFO, LOG_TAG, "Open the More Option\n");
 }
+
+
 

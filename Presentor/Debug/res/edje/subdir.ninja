@@ -4,7 +4,7 @@
 
 
 edctool = edje_cc
-edcflags = -id "C:/Users/HyunJae/tizen/Presentor/Presentor/edje/images" -id "C:/tizen-sdk/tools/enventor/share/enventor/images" -sd "C:/Users/HyunJae/tizen/Presentor/Presentor/edje/sounds" -sd "C:/tizen-sdk/tools/enventor/share/enventor/sounds" -fd "C:/Users/HyunJae/tizen/Presentor/Presentor/edje/fonts" -fd "C:/tizen-sdk/tools/enventor/share/enventor/fonts"
+edcflags = -id "/Users/HyunJae/workSpace/Presentor/Presentor/edje/images" -id "/Users/HyunJae/tizen-sdk/tools/enventor/share/enventor/images" -sd "/Users/HyunJae/workSpace/Presentor/Presentor/edje/sounds" -sd "/Users/HyunJae/tizen-sdk/tools/enventor/share/enventor/sounds" -fd "/Users/HyunJae/workSpace/Presentor/Presentor/edje/fonts" -fd "/Users/HyunJae/tizen-sdk/tools/enventor/share/enventor/fonts"
 
 build res/edje/bt_chat.edj: build_edc ../res/edje/bt_chat.edc 
 build res/edje/create_server.edj: build_edc ../res/edje/create_server.edc 

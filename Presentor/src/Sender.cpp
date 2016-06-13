@@ -229,6 +229,9 @@ bt_button_layout_create(appdata_s *ad)
 
 
 	set_clock_layout(ad);
-	init_sensor(ad);
+
+	if(ad->use_gesture){
+		init_sensor(ad);
+	}
 
 }
