@@ -47,15 +47,15 @@ int getCurrentState(appdata_s * ad){
 	}
 
 	int count = ad->gyroCount;
-	sensor_values value[3];
-	bool stop_flags[3];
-	for(int i=0;i<3;i++){
+	sensor_values value[5];
+	bool stop_flags[5];
+	for(int i=0;i<5;i++){
 		value[i] = ad->gyroValue[((count-i-1)+10)%10];
 		stop_flags[i] = isStop(value[i]);
 	}
 
 	bool flag = true;
-	for(int i=0;i<3;i++){
+	for(int i=0;i<5;i++){
 		if(!stop_flags[i])
 			flag = false;
 	}
@@ -124,10 +124,10 @@ getAccelData(appdata_s * ad){
 		bool left = true;
 
 		for(int i=0;i<3;i++){
-			if(value[i].y <30){
+			if(value[i].y <40){
 				right = false;
 			}
-			if(value[i].y > -30){
+			if(value[i].y > -40){
 				left = false;
 			}
 		}
