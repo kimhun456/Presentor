@@ -18,7 +18,13 @@
 #ifndef __BT_CHAT_ROOM_H__
 #define __BT_CHAT_ROOM_H__
 
+#include "Launcher.h"
+
 void bt_chat_room_layout_create(appdata_s *ad);
 void bt_button_layout_create(appdata_s *ad);
+
+void _next_message_send(appdata_s *ad);
+void _prev_message_send(appdata_s *ad);
+
 
 #endif /* __CHAT_ROOM_H__ */

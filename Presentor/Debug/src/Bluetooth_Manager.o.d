@@ -221,6 +221,7 @@ src/Bluetooth_Manager.o: ../src/Bluetooth_Manager.cpp \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/efl-extension/common/efl_extension_rotary_selector.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/efl-extension/common/efl_extension_more_option.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/dlog/dlog.h \
+  /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/sensor/sensor.h \
   /Users/HyunJae/workSpace/Presentor/Presentor/inc/log.h \
   /Users/HyunJae/workSpace/Presentor/Presentor/inc/BluetoothManager.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/network/bluetooth.h \

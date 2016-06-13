@@ -11,11 +11,6 @@ build src/Bluetooth_Manager.o.ast: build_cpp_ast ../src/Bluetooth_Manager.cpp
 build src/Bluetooth_Manager.o.fn: build_cpp_fn src/Bluetooth_Manager.o.ast 
 build src/Bluetooth_Manager.o.sa: build_cpp_sa ../src/Bluetooth_Manager.cpp | extfn
 build src/Bluetooth_Manager.o.txt: build_cpp_api ../src/Bluetooth_Manager.cpp 
-build src/Gesture.o: build_cpp ../src/Gesture.cpp 
-build src/Gesture.o.ast: build_cpp_ast ../src/Gesture.cpp 
-build src/Gesture.o.fn: build_cpp_fn src/Gesture.o.ast 
-build src/Gesture.o.sa: build_cpp_sa ../src/Gesture.cpp | extfn
-build src/Gesture.o.txt: build_cpp_api ../src/Gesture.cpp 
 build src/Launcher.o: build_cpp ../src/Launcher.cpp 
 build src/Launcher.o.ast: build_cpp_ast ../src/Launcher.cpp 
 build src/Launcher.o.fn: build_cpp_fn src/Launcher.o.ast 

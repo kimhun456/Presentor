@@ -12,7 +12,6 @@
 
 
 #include <string>
-#include <device/haptic.h>
 
 
 // init_timer
@@ -23,7 +22,5 @@ init_timer(appdata_s *ad);
 void
 set_clock_layout(appdata_s *ad);
 
-void
-haptic(int count);
 
 #endif /* STOPWATCH_H_ */

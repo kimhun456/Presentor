@@ -222,6 +222,7 @@ src/MenuList.o: ../src/MenuList.cpp \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/efl-extension/common/efl_extension_common.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/efl-extension/common/efl_extension_rotary_selector.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/efl-extension/common/efl_extension_more_option.h \
+  /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/sensor/sensor.h \
   /Users/HyunJae/workSpace/Presentor/Presentor/inc/BluetoothManager.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/network/bluetooth.h \
   /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/glib-2.0/glib.h \
@@ -303,6 +304,4 @@ src/MenuList.o: ../src/MenuList.cpp \
   /Users/HyunJae/workSpace/Presentor/Presentor/inc/Sender.h \
   /Users/HyunJae/workSpace/Presentor/Presentor/inc/MenuList.h \
   /Users/HyunJae/workSpace/Presentor/Presentor/inc/SensorManager.h \
-  /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/sensor/sensor.h \
-  /Users/HyunJae/workSpace/Presentor/Presentor/inc/Gesture.h \
-  /Users/HyunJae/tizen-sdk/tools/smart-build-interface/../../platforms/tizen-2.3.1/wearable/rootstraps/wearable-2.3.1-device.core/usr/include/context-manager/gesture_recognition.h
+  /Users/HyunJae/workSpace/Presentor/Presentor/inc/StopWatch.h

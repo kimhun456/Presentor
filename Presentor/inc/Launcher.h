@@ -18,8 +18,6 @@
 #ifndef __BLUETOOTH_CHAT_H__
 #define __BLUETOOTH_CHAT_H__
 
-#include <tuple>
-#include <queue>
 #include <app.h>
 #include <tizen.h>
 #include <Elementary.h>
@@ -29,7 +27,8 @@
 #include <dlog.h>
 #include <stdbool.h>
 #include <efl_extension.h>
-
+#include <sensor.h>
+#include <device/haptic.h>
 #include "log.h"
 
 #if !defined(PACKAGE)
@@ -44,7 +43,18 @@
 #define HAPI __attribute__((visibility("hidden")))
 
 
-typedef std::tuple<float, float, float> xyz;
+class XYZ{
+public:
+	float x;
+	float y;
+	float z;
+};
+
+typedef struct sensor_{
+	float x;
+	float y;
+	float z;
+} sensor_values;
 
 typedef struct appdata{
 	Evas_Object* win;
@@ -75,8 +85,33 @@ typedef struct appdata{
 	int win_h;
 
 	//Gesture data queue
-	std::queue<xyz> gyroQueue;
-	std::queue<xyz> accelQueue;
+	int frequency;
+
+	sensor_values gyroValue[10];
+	sensor_values accValue[10];
+	int gyroCount;
+	int accCount;
+
+	// 데이터충분한지
+	bool gyroEnoughData;
+	bool accEnoughData;
+
+	// 모션을 받아들일 준비가 되었는지
+	bool acceptMotion;
+	int acceptCount;
+
+	// 남아있는 시간동안 처리 가능한지
+	int restTime;
+
+
+	// 리스너들
+    sensor_listener_h gyro_listener;
+    sensor_listener_h accel_listener;
+
+    //Haptic
+
+    haptic_device_h handle;
+    haptic_effect_h effect_handle;
 
 } appdata_s;
 

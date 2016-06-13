@@ -22,7 +22,6 @@
 #include "Sender.h"
 #include "MenuList.h"
 #include "SensorManager.h"
-#include "Gesture.h"
 
 static void _sensor_cb(void *data, Evas_Object *obj, void *event_info)
 {

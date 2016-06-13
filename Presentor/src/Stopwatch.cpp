@@ -9,13 +9,6 @@
 
 using namespace std;
 
-
-
-haptic_device_h handle;
-haptic_effect_h effect_handle;
-
-
-
 Eina_Bool
 time_tic_toc(void *data){
 
@@ -70,17 +63,16 @@ time_tic_toc(void *data){
 	//5분
 	if(min == 5 && sec == 0){
 
-		error = device_haptic_vibrate(handle, 1000, 55, &effect_handle);
+		error = device_haptic_vibrate(ad->handle, 2000, 55, &ad->effect_handle);
 	}
 	// 1분
 	else if(min == 1 && sec ==0){
 
-		error = device_haptic_vibrate(handle, 2000, 77, &effect_handle);
+		error = device_haptic_vibrate(ad->handle, 2000, 77, &ad->effect_handle);
 	}
 	// 끝났을 경우
 	else if(min ==0 && sec == 0){
-
-		error = device_haptic_vibrate(handle, 3000, 99, &effect_handle);
+		error = device_haptic_vibrate(ad->handle, 4000, 99, &ad->effect_handle);
 	}
 
 
@@ -138,6 +130,14 @@ set_clock_layout(appdata_s *ad){
 							doubleClick, ad);
 
 }
+void
+init_haptic(appdata_s *ad){
+
+	int error;
+	error = device_haptic_open(0, &ad->handle);
+	dlog_print(DLOG_INFO, LOG_TAG, "[device_haptic_open] error:%d",error);
+}
+
 
 void
 init_timer(appdata_s *ad){
@@ -148,11 +148,7 @@ init_timer(appdata_s *ad){
 	ad->timer =  ecore_timer_add(1, time_tic_toc, ad);
 	ecore_timer_freeze(ad->timer);
 	ad->start = false;
-
-
-	int error;
-	error = device_haptic_open(0, &handle);
-	dlog_print(DLOG_INFO, LOG_TAG, "[device_haptic_open] error:%d",error);
+	init_haptic(ad);
 
 
 }

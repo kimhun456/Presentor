@@ -4,11 +4,11 @@
 <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
 <Reference URI="author-signature.xml">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
-<DigestValue>lCUDGOh15tE4jJ9U99Bf4mHM374PKRQdQxT8ZvbX3Yc=</DigestValue>
+<DigestValue>W/2H+nDuPPzJwW0BK3F4TPEMceB/WyYi2OrzX60VSNI=</DigestValue>
 </Reference>
 <Reference URI="bin%2Fpresentor">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
-<DigestValue>3g/tIfgkfWo2DICcvQorhbz80hOgBs4Oui3mdDIcUno=</DigestValue>
+<DigestValue>oXKQF52sncyPvGumJRPB6vmPACrLIMNlrqNaH2QIDko=</DigestValue>
 </Reference>
 <Reference URI="res%2Fedje%2Fbt_chat.edj">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
@@ -35,11 +35,11 @@
 </Reference>
 </SignedInfo>
 <SignatureValue>
-S7hwk80N3P1WrcSU1gc4O1LqMKoWGF+gtE5nudFjdHJQxPR/LYbFqUxIUpWslClcJPKE+UDbK5uM
-4I3zmPC6hd2K1Nc75MNMRPik0K96dJvpyqI3iVSj6WNh6DTw0EXUXxxboBwuLH/b6H6CkYwfDv3k
-/tw5jT+ZC4mHClvYvuNMhE3el0Elf8dmSiFjcf9uIC19DK9J/f/hTzI54qh6+v/t2eod1TS+2/eO
-IjR/BX6dsQPHbhaivk3H83cr6JuPTYh8YvQFAv/pWRcUlFxa78caG9WmQzvU6Vq5/GtF77Gu0FKq
-g7Zq84Q6Xntong8xoJTRFpartJnjMsJteahoaw==
+cZSeoC7zCN9mXNx8441Ojz28Gla0Qy7Rx2J89nQcJUbGhtFLnfGxQZkML+oqTOPcSxg/z//ewvuQ
+A/ZTZ/sRZEl/xyZbm7P/+X1BJGzcjVwBm60MpQBLy5KFj5/mY4yXt7fzwfSbG+rUPpSI75Y6V2aQ
+dsQfi43q0lgSKsggde/Z1VUMnWQk8NifPD+ekVBjmvcC/IEzdHl1mf3x5mcdPm9lS+Q345ic7zXP
+qW6nudTPOXGibAv+v3j7VnxgApNEYVDWC71O+TYJXWE8fCbwMbSKSjfCBSUXa8G99V1mNyYPEta2
+0CTtGqc/6xwjbVHDsTzYyqOp1rPWYV5cWMnCcQ==
 </SignatureValue>
 <KeyInfo>
 <X509Data>

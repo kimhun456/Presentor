@@ -21,11 +21,12 @@
 #include "Notice.h"
 #include "MenuList.h"
 #include "StopWatch.h"
-
+#include "SensorManager.h"
+#include "Sender.h"
 
 Eina_Bool _rotary_handler_cb(void *data, Eext_Rotary_Event_Info *ev);
 
-static void _next_message_send(appdata_s *ad)
+void _next_message_send(appdata_s *ad)
 {
 
 	Evas_Object *noti = NULL;
@@ -45,7 +46,7 @@ static void _next_message_send(appdata_s *ad)
 	}
 }
 
-static void _prev_message_send(appdata_s *ad)
+void _prev_message_send(appdata_s *ad)
 {
 
 	Evas_Object *noti = NULL;
@@ -228,5 +229,6 @@ bt_button_layout_create(appdata_s *ad)
 
 
 	set_clock_layout(ad);
+	init_sensor(ad);
 
 }
